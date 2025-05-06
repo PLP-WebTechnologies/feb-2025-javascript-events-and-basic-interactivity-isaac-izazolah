@@ -1,0 +1,167 @@
+HTML CODES
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive JavaScript Playground</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Welcome to the Ultimate JavaScript Playground! 🎉</h1>
+
+    <!-- Event Handling Section -->
+    <section>
+        <button id="clickBtn">Click Me!</button>
+        <p id="hoverText">Hover over the button to change my color!</p>
+        <input type="text" id="keypressInput" placeholder="Press a key">
+    </section>
+
+    <!-- Interactive Elements Section -->
+    <section>
+        <button id="changeBtn">Change My Color</button>
+        <div id="imageGallery">
+            <img src="https://via.placeholder.com/150" alt="Image 1">
+            <img src="https://via.placeholder.com/150" alt="Image 2">
+            <img src="https://via.placeholder.com/150" alt="Image 3">
+        </div>
+    </section>
+
+    <!-- Form Validation Section -->
+    <section>
+        <form id="myForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required placeholder="Enter your email">
+            <label for="password">Password:</label>
+            <input type="password" id="password" required minlength="8" placeholder="Enter your password">
+            <button type="submit">Submit</button>
+        </form>
+        <p id="formFeedback"></p>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+CSS FILE
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#imageGallery img {
+    width: 150px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#hoverText {
+    color: black;
+}
+
+#hoverText:hover {
+    color: red;
+}
+
+#formFeedback {
+    font-style: italic;
+    color: red;
+}
+
+JAVASCRIPT FILE.
+// 1. Event Handling
+
+// Button Click Event
+document.getElementById('clickBtn').addEventListener('click', () => {
+    alert('Button was clicked!');
+});
+
+// Hover Effect on Text
+document.getElementById('hoverText').addEventListener('mouseover', () => {
+    document.getElementById('hoverText').style.color = 'green';
+});
+document.getElementById('hoverText').addEventListener('mouseout', () => {
+    document.getElementById('hoverText').style.color = 'black';
+});
+
+// Keypress Detection
+document.getElementById('keypressInput').addEventListener('keypress', (event) => {
+    console.log(`Key pressed: ${event.key}`);
+});
+
+// Bonus: Double-click Event
+document.getElementById('clickBtn').addEventListener('dblclick', () => {
+    alert('You double-clicked the button!');
+});
+
+// Bonus: Long Press Detection (using timeout)
+let timer;
+document.getElementById('clickBtn').addEventListener('mousedown', () => {
+    timer = setTimeout(() => {
+        alert('Long press detected!');
+    }, 1000); // Detects long press after 1 second
+});
+document.getElementById('clickBtn').addEventListener('mouseup', () => {
+    clearTimeout(timer);
+});
+
+// 2. Interactive Elements
+
+// Button that Changes Color
+document.getElementById('changeBtn').addEventListener('click', () => {
+    const colors = ['#FF5733', '#33FF57', '#3357FF'];
+    document.getElementById('changeBtn').style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+});
+
+// Image Gallery (Click to enlarge)
+const images = document.querySelectorAll('#imageGallery img');
+images.forEach(image => {
+    image.addEventListener('click', () => {
+        alert(`You clicked on ${image.alt}`);
+    });
+});
+
+// 3. Form Validation
+
+// Real-time Validation Feedback
+document.getElementById('email').addEventListener('input', (e) => {
+    const feedback = document.getElementById('formFeedback');
+    const email = e.target.value;
+    if (!email.includes('@')) {
+        feedback.textContent = 'Please enter a valid email.';
+    } else {
+        feedback.textContent = '';
+    }
+});
+
+document.getElementById('password').addEventListener('input', (e) => {
+    const feedback = document.getElementById('formFeedback');
+    const password = e.target.value;
+    if (password.length < 8) {
+        feedback.textContent = 'Password must be at least 8 characters long.';
+    } else {
+        feedback.textContent = '';
+    }
+});
+
+// Form Submission Validation
+document.getElementById('myForm').addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form submission
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (email && password.length >= 8) {
+        alert('Form submitted successfully!');
+    } else {
+        alert('Please fill out the form correctly.');
+    }
+});
